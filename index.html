@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>9 Anos de Amor - Caroline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #000;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .slideshow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .slide img {
+        max-height: 80vh;
+        max-width: 90vw;
+        border-radius: 12px;
+        object-fit: contain;
+      }
+
+      .active {
+        opacity: 1;
+        z-index: 1;
+      }
+
+      .message {
+        position: absolute;
+        bottom: 40px;
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        padding: 0 20px;
+        color: #fff;
+        text-shadow: 2px 2px 4px #000;
+      }
+
+      .final-message {
+        position: absolute;
+        top: 40%;
+        width: 100%;
+        text-align: center;
+        font-size: 10vw;
+        color: red;
+        font-weight: bold;
+        text-shadow: 2px 2px 5px #000;
+        transform: perspective(500px) rotateX(20deg);
+        display: none;
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%, 50%, 100% { opacity: 1; }
+        25%, 75% { opacity: 0; }
+      }
+
+      @media (max-width: 600px) {
+        .message {
+          font-size: 1rem;
+        }
+
+        .final-message {
+          font-size: 15vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="slideshow" id="slideshow"></div>
+      <div class="message" id="message">
+        Caroline, hoje completamos 9 anos de casados. Quero expressar o quanto admiro você e o quanto sou grato a Deus por essa esposa incrível que Ele me deu. Você me apoia, me fortalece e me ajuda a ser um homem melhor. Que esses 9 anos se multipliquem muitas e muitas vezes, e que possamos, a cada novo ano, amar ainda mais um ao outro.
+      </div>
+      <div class="final-message" id="finalMessage">Eu te amo</div>
+    </div>
+
+    <script>
+      const images = [
+        "A.jpg", "B.jpg", "C.jpg", "D.jpg", "E.jpg", "F.jpg",
+        "G.jpg", "H.jpg", "I.jpg", "J.jpg", "K.jpg", "L.jpg",
+        "M.jpg", "N.jpg", "O.jpg", "P.jpg", "Q.jpg", "R.jpg"
+      ];
+
+      const slideshow = document.getElementById("slideshow");
+      const finalMessage = document.getElementById("finalMessage");
+
+      images.forEach((src) => {
+        const slide = document.createElement("div");
+        slide.className = "slide";
+        const img = document.createElement("img");
+        img.src = src;
+        slide.appendChild(img);
+        slideshow.appendChild(slide);
+      });
+
+      const slides = document.querySelectorAll(".slide");
+      let current = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.remove("active");
+          if (i === index) slide.classList.add("active");
+        });
+
+        if (index === slides.length) {
+          document.getElementById("message").style.display = "none";
+          finalMessage.style.display = "block";
+        }
+      }
+
+      function startSlideshow() {
+        showSlide(current);
+        const interval = setInterval(() => {
+          current++;
+          if (current > slides.length) {
+            clearInterval(interval);
+            return;
+          }
+          showSlide(current);
+        }, 6000);
+      }
+
+      window.onload = startSlideshow;
+    </script>
+  </body>
+</html>
